@@ -1,0 +1,9 @@
+{
+	"name": "pollsockets-js",
+	"version": "1.0.0",
+	"description": "Client side implementation of pollsockets",
+	"main": "./src/pollsockets.js",
+	"author": "Vytautas Smilingis",
+	"license": "MIT",
+	"repository": "https://github.com/pollsockets/pollsockets-js"
+}
