@@ -1,4 +1,4 @@
-# Serverside implementation of pollsockets tailored for Laravel
+# Client side implementation of pollsockets
 
 [![Latest Version on NPM](https://img.shields.io/npm/v/pollsockets-js.svg?style=flat-square)](https://www.npmjs.com/package/pollsockets-js)
 [![Total Downloads](https://img.shields.io/npm/dt/pollsockets-js.svg?style=flat-square)](https://www.npmjs.com/package/pollsockets-js)
