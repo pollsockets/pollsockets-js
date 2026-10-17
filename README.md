@@ -106,9 +106,42 @@ The server keeps events for `retention` milliseconds. If the time between two su
 
 ## Upgrading from v1
 
-- `useSocket()` and `stopSockets()` are removed. Use `createPollsocket(channel, options)`, `on()` / `onAny()` and `start()` / `stop()`.
+Upgrade the server to pollsockets-laravel 2.x at the same time, because the response format changed.
+
+Before (v1):
+
+```js
+import { useSocket, stopSockets } from 'pollsockets-js'
+
+useSocket('orders', {
+	created: () => refreshOrders(),
+}, {
+	pollInterval: 1000,
+})
+
+// Later:
+stopSockets()
+```
+
+After (v2):
+
+```js
+import { createPollsocket } from 'pollsockets-js'
+
+const socket = createPollsocket('orders', { interval: 1000 })
+
+socket.on('created', () => refreshOrders())
+socket.start()
+
+// Later:
+socket.stop()
+```
+
+- `useSocket()` and `stopSockets()` are removed. Use `createPollsocket(channel, options)`, then `on()` / `onAny()`.
+- Call `start()`. In v1, `useSocket()` started polling at once. In v2, `createPollsocket()` does not poll until you call `start()`.
+- `stop()` stops one instance. v1 had one global `stopSockets()`. In v2, each instance has its own state and its own `stop()`, so you can use more than one channel at the same time.
 - `pollInterval` is now `interval`, and the default changed from 250 ms to 1000 ms.
-- The server response format changed. Use pollsockets-laravel 2.x.
+- To skip the events that this tab caused, send `socket.clientId` as the `X-Pollsockets-Client` header on your write requests (see "Ignoring your own changes"). This step is optional. Without it, the tab also receives its own events.
 - The package is now an ES module with TypeScript types.
 
 ## Changelog
